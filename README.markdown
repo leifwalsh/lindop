@@ -4,6 +4,12 @@ lindop
 Given a set of hosts with whom you want to avoid communicating, `lindop` lowers
 your laptop's brightness whenever you visit one of them.
 
+Concept
+-------
+
+Uses `tcpdump` to watch for connections to blacklisted hosts.  Dims with
+`/proc/` api when necessary.
+
 Config
 ------
 
