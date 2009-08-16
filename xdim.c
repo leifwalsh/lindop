@@ -1,5 +1,3 @@
-#!/usr/bin/tcc -run -lX11 -lXxf86vm
-
    /* -*- c -*-
       Change brightness of default display's default screen.
       Requires the libxxf86vm-dev package.
@@ -12,13 +10,11 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/xf86vmode.h>
 
-#define MAX 256
-
 int main(int argc, char **argv) {
    Display *dpy;
    int screen, len, i;
    float mult = -1;
-   unsigned short rgb[MAX];
+   unsigned short rgb[256];
 
    assert(argc == 2);
    mult = atof(argv[1]);
@@ -27,7 +23,7 @@ int main(int argc, char **argv) {
    assert(dpy);
    screen = DefaultScreen(dpy);
    XF86VidModeGetGammaRampSize(dpy, screen, &len);
-   assert(len <= MAX);
+   assert(len <= (ssize_t) (sizeof(rgb) / sizeof(rgb[0])));
 
    for (i = 0; i < len; i++)
       rgb[i] = mult * i * 65535 / (len-1);
